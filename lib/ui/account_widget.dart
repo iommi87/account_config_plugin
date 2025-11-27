@@ -10,10 +10,12 @@ class AccountWidget extends StatefulWidget {
     required this.result,
     this.dialogWidth = 2,
     this.dialogHeight = 1.8,
+    this.buttonHeight = 90.0,
   });
   final double dialogWidth;
   final double dialogHeight;
   final int currentAccountId;
+  final double buttonHeight;
 
   final Function(String url, int currentAccountId, String shortInitial) result;
 
@@ -68,11 +70,11 @@ class _AccountWidgetState extends State<AccountWidget> {
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisSpacing: 1,
                 mainAxisSpacing: 1,
                 crossAxisCount: 3,
-                mainAxisExtent: 90.0,
+                mainAxisExtent: widget.buttonHeight,
               ),
               itemCount: buttons.length,
               itemBuilder: (_, int index) {
