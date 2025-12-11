@@ -37,8 +37,8 @@ class RequestHelper {
     return [];
   }
 
-  Future<String?> getAccountUrl(int accountId) async {
-    String? response = await _httpGet('/api/get_company_url/', {'account_id': accountId.toString()});
+  Future<String?> getAccountUrl(int accountId, String type) async {
+    String? response = await _httpGet('/api/get_company_url/', {'account_id': accountId.toString(), 'type': type});
     if (response != null) {
       return jsonDecode(response);
     }

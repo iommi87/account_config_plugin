@@ -7,6 +7,7 @@ class AccountWidget extends StatefulWidget {
   const AccountWidget({
     super.key,
     required this.currentAccountId,
+    required this.type,
     required this.result,
     this.dialogWidth = 2,
     this.dialogHeight = 1.8,
@@ -15,6 +16,7 @@ class AccountWidget extends StatefulWidget {
   final double dialogWidth;
   final double dialogHeight;
   final int currentAccountId;
+  final String type;
   final double buttonHeight;
 
   final Function(String url, int currentAccountId, String shortInitial) result;
@@ -139,7 +141,7 @@ class _AccountWidgetState extends State<AccountWidget> {
                   currentAccountId = value!;
                 });
 
-                var url = await requestHelper.getAccountUrl(currentAccountId);
+                var url = await requestHelper.getAccountUrl(currentAccountId, widget.type);
 
                 widget.result(url!, currentAccountId, currentAccount.shortInitial);
               }
