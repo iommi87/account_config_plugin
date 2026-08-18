@@ -26,13 +26,15 @@ class AccountWidget extends StatefulWidget {
 }
 
 class _AccountWidgetState extends State<AccountWidget> {
-  RequestHelper requestHelper = RequestHelper();
+  late RequestHelper requestHelper;
 
   int currentAccountId = 0;
 
   @override
   void initState() {
     super.initState();
+
+    requestHelper = RequestHelper(context);
 
     currentAccountId = widget.currentAccountId;
   }
