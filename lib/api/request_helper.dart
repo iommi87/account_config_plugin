@@ -31,11 +31,15 @@ class RequestHelper {
       if (response.statusCode == 200) {
         return utf8.decode(response.bodyBytes);
       } else {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(utf8.decode(response.bodyBytes)), duration: const Duration(seconds: 10)));
+        }
         return null;
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), duration: const Duration(seconds: 10)));
       }
       return null;
     }
