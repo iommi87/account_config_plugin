@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:account_config_plugin/api/request_helper.dart';
+import 'package:account_config_plugin/log_helper.dart';
 import 'package:account_config_plugin/models/account_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +38,7 @@ class _AccountWidgetState extends State<AccountWidget> {
   void initState() {
     super.initState();
 
-    requestHelper = RequestHelper(context);
+    requestHelper = RequestHelper();
 
     currentAccountId = widget.currentAccountId;
   }
@@ -150,6 +151,10 @@ class _AccountWidgetState extends State<AccountWidget> {
     return FutureProvider<List<AccountModel>>(
       create: (_) => requestHelper.getAccounts(),
       initialData: const [],
+      catchError: (context, error) {
+        LogHelper.logException(error ?? '');
+        return [];
+      },
       child: Consumer<List<AccountModel>>(
         builder: (_, List<AccountModel> accounts, w) {
           if (accounts.isEmpty) return const SizedBox();

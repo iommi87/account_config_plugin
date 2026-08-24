@@ -1,6 +1,6 @@
 import 'package:account_config_plugin/api/crypto_helper.dart';
+import 'package:account_config_plugin/log_helper.dart';
 import 'package:account_config_plugin/models/account_model.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -9,16 +9,11 @@ import 'dart:convert';
 class RequestHelper {
   late final CryptoHelper _cryptoHelper;
 
-  late BuildContext context;
-
-  RequestHelper(BuildContext context) {
+  RequestHelper() {
     _cryptoHelper = CryptoHelper();
-
-    context = context;
   }
 
   Future<String?> _httpGet(String method, [Map<String, String>? params]) async {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('shevida'), duration: const Duration(seconds: 10)));
     try {
       final response = await http.get(
         Uri.https('account.ramos.com.ge', method, params),
@@ -31,23 +26,16 @@ class RequestHelper {
       if (response.statusCode == 200) {
         return utf8.decode(response.bodyBytes);
       } else {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(utf8.decode(response.bodyBytes)), duration: const Duration(seconds: 10)));
-        }
         return null;
       }
     } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), duration: const Duration(seconds: 10)));
-      }
+      LogHelper.logException(e);
       return null;
     }
   }
 
   Future<List<AccountModel>> getAccounts() async {
     String? response = await _httpGet('/api/get_companies/');
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response ?? 'kk'), duration: const Duration(seconds: 10)));
     if (response != null) {
       final parsed = jsonDecode(response);
       return parsed.map<AccountModel>((map) => AccountModel.fromMap(map)).toList();
