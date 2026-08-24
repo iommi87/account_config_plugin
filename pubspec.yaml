@@ -1,6 +1,6 @@
 name: account_config_plugin
 description: "Account config plugin"
-version: 0.0.7
+version: 0.0.8
 homepage:
 
 environment:
@@ -14,7 +14,6 @@ dependencies:
   encrypt: ^5.0.3
   crypto: ^3.0.7
   intl: ^0.20.2
-  path: ^1.9.1
 
 dev_dependencies:
   flutter_lints: ^6.0.0

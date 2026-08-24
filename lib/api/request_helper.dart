@@ -1,5 +1,4 @@
 import 'package:account_config_plugin/api/crypto_helper.dart';
-import 'package:account_config_plugin/log_helper.dart';
 import 'package:account_config_plugin/models/account_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -14,22 +13,17 @@ class RequestHelper {
   }
 
   Future<String?> _httpGet(String method, [Map<String, String>? params]) async {
-    try {
-      final response = await http.get(
-        Uri.https('account.ramos.com.ge', method, params),
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': _cryptoHelper.encrypt("${DateFormat('yyyy-MM-dd').format(DateTime.now())}ramos"),
-        },
-      );
+    final response = await http.get(
+      Uri.https('account.ramos.com.ge', method, params),
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': _cryptoHelper.encrypt("${DateFormat('yyyy-MM-dd').format(DateTime.now())}ramos"),
+      },
+    );
 
-      if (response.statusCode == 200) {
-        return utf8.decode(response.bodyBytes);
-      } else {
-        return null;
-      }
-    } catch (e) {
-      LogHelper.logException(e);
+    if (response.statusCode == 200) {
+      return utf8.decode(response.bodyBytes);
+    } else {
       return null;
     }
   }
