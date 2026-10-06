@@ -61,8 +61,10 @@ class _AccountWidgetState extends State<AccountWidget> {
 
     // Cap the dialog so it stays comfortable on tablets/desktops instead of
     // stretching edge to edge, while still shrinking to fit small phones.
-    final maxWidth = math.min(screenSize.width / widget.dialogWidth, 420.0);
-    final maxHeight = math.min(screenSize.height / widget.dialogHeight, 520.0);
+    // Floored at the ConstrainedBox's minWidth/minHeight below so the
+    // resulting constraints are always normalized (min <= max).
+    final maxWidth = math.min(screenSize.width / widget.dialogWidth, 420.0).clamp(280.0, double.infinity);
+    final maxHeight = math.min(screenSize.height / widget.dialogHeight, 520.0).clamp(360.0, double.infinity);
 
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),

@@ -1,6 +1,6 @@
 name: account_config_plugin
 description: "Account config plugin"
-version: 0.0.8
+version: 0.0.9
 homepage:
 
 environment:
